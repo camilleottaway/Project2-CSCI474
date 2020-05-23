@@ -111,6 +111,7 @@ def BetterCommandLineArgReader():
                         help="The hospital lag")
     parser.add_argument("-decay", action="store", 
                         help="Indicate path to .txt file containing age groups and R0 values")
+    parser.add_argument("-dinf", action="store", help="Number of days infectious", type=float)
     return parser.parse_args()
 
 def UpdateDefaultValues(defaultValues, arguments):
@@ -223,7 +224,7 @@ def f(defaultValues):
     DHospitalLag = defaultValues["HOSPITALLAG"]
     UseDecayingR0 = defaultValues["UseDecayingR0"]
     R0FilePath = defaultValues["R0FilePath"] 
-
+    D_infectious = defaultValues["dinf"]
     if (UseDecayingR0):
         arrayOfR0s = GetR0DecayValues(R0FilePath)
         if (arrayOfR0s == None):
@@ -342,7 +343,8 @@ def main():
         "PSEVERE": 0.04,
         "HOSPITALLAG": 8,
         "UseDecayingR0": False,
-        "R0FilePath": None
+        "R0FilePath": None,
+        "DINFECTIOUS": 10
     }
     args = BetterCommandLineArgReader()
     UpdateDefaultValues(defaultValues, args)
@@ -363,8 +365,8 @@ def main():
     recoveredPlot = px.line(x=recoveredPlotData["x"], y=recoveredPlotData["y"], title=recoveredPlotData["name"])
 
     infectedPlot.show()
-    #deadPlot.show()
-    #recoveredPlot.show()
+    # deadPlot.show()
+    # recoveredPlot.show()
 
 
 if __name__ == "__main__":
