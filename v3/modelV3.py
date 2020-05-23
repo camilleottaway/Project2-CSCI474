@@ -334,6 +334,11 @@ def getTrace(data, name, metric):
     }
     return trace
 
+def keymetrics():
+    maxDead = 0
+    maxInfected = 0
+    #maxRecovered = 0
+
 def main():
         # default values for variables that can be modified with command line arguments go here
     defaultValues = {
