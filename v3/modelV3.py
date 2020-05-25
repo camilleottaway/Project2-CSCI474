@@ -99,15 +99,15 @@ def GetR0DecayValues(R0FilePath):
 
 def BetterCommandLineArgReader():
     parser = argparse.ArgumentParser(description='SEIR Model For Covid 19')
-    parser.add_argument("-population", action="store", type=int, dest="N",
+    parser.add_argument("-N", action="store", type=int, dest="N",
                         help="The population size for the model")
-    parser.add_argument("-r0", action="store", type=float,
+    parser.add_argument("-R0", action="store", type=float,
                         help="The rate of transmission to be used for the ENTIRE population")
-    parser.add_argument("-i0", action="store", type=int)
-    parser.add_argument("-cfr", action="store", type=float)
-    parser.add_argument("-psevere", action="store", type=float,
+    parser.add_argument("-I0", action="store", type=int)
+    parser.add_argument("-CFR", action="store", type=float)
+    parser.add_argument("-PSEVERE", action="store", type=float,
                         help="The probability that the infection is severe")
-    parser.add_argument("-hl", "--hospital_lag", action="store", type=int, 
+    parser.add_argument("-HOSPITALLAG", "--hospital_lag", action="store", type=int, 
                         help="The hospital lag")
     parser.add_argument("-decay", action="store", 
                         help="Indicate path to .txt file containing age groups and R0 values")
@@ -117,6 +117,7 @@ def BetterCommandLineArgReader():
 
 def UpdateDefaultValues(defaultValues, arguments):
     argumentsDict = vars(arguments)
+    print(argumentsDict)
     for arg in argumentsDict:
         if argumentsDict[arg] is not None:
             defaultValues[arg] = argumentsDict[arg]
@@ -220,6 +221,7 @@ def f(defaultValues):
     N = defaultValues["N"]
     I0 = defaultValues["I0"]
     R0 = defaultValues["R0"]
+    print(R0)
     CFR = defaultValues["CFR"]
     P_SEVERE = defaultValues["PSEVERE"]
     DHospitalLag = defaultValues["HOSPITALLAG"]
@@ -360,10 +362,14 @@ def main():
     if (defaultValues["UseDecayingR0"]):
         defaultValues["R0FilePath"] = args.decay
 
-    file = open("results.txt","a+")
+
+    res = open("results.txt","a+")
+    res.write(str(defaultValues))
     data = f(defaultValues)
-    file.write(str(data))
-    # print(data)
+    res.write(str(data))
+    res.write("\n")
+    res.close()
+    
     if(args.plot):
         infectedPlotData = getTrace(data, "Infected, seasonal effect = 0", "Infected")
         infectedPlot = px.line(x=infectedPlotData["x"], y=infectedPlotData["y"], title=infectedPlotData["name"])
