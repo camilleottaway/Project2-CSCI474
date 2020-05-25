@@ -117,7 +117,6 @@ def BetterCommandLineArgReader():
 
 def UpdateDefaultValues(defaultValues, arguments):
     argumentsDict = vars(arguments)
-    print(argumentsDict)
     for arg in argumentsDict:
         if argumentsDict[arg] is not None:
             defaultValues[arg] = argumentsDict[arg]
@@ -221,7 +220,6 @@ def f(defaultValues):
     N = defaultValues["N"]
     I0 = defaultValues["I0"]
     R0 = defaultValues["R0"]
-    print(R0)
     CFR = defaultValues["CFR"]
     P_SEVERE = defaultValues["PSEVERE"]
     DHospitalLag = defaultValues["HOSPITALLAG"]
