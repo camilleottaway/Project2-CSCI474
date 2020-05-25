@@ -1,4 +1,3 @@
-# import modelV3.py
 import os
 import sys
 import numpy as np
@@ -11,9 +10,9 @@ def main():
                 for psev in np.round(np.arange(0.1, 0.81, 0.1), 2): #step size .1
                     modelcall = "python3 modelV3.py "
                     modelcall += f"-r0 {rnaught} -cfr {cfr} -dinf {dinf} -psevere {psev}"
-                    print(modelcall)
-                    #os.system(modelcall)
-                    #f.write("R0-" + str(rnaught))
+                    # print(modelcall)
+                    f.write(modelcall +"\n")
+                    os.system(modelcall)
 
 if __name__ == "__main__":
     main()
