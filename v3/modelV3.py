@@ -360,7 +360,10 @@ def main():
     if (defaultValues["UseDecayingR0"]):
         defaultValues["R0FilePath"] = args.decay
 
+    file = open("results.txt","a+")
     data = f(defaultValues)
+    file.write(str(data))
+    # print(data)
     infectedPlotData = getTrace(data, "Infected, seasonal effect = 0", "Infected")
     infectedPlot = px.line(x=infectedPlotData["x"], y=infectedPlotData["y"], title=infectedPlotData["name"])
 
