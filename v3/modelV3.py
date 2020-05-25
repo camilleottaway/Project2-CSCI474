@@ -364,16 +364,15 @@ def main():
     data = f(defaultValues)
     file.write(str(data))
     # print(data)
-    infectedPlotData = getTrace(data, "Infected, seasonal effect = 0", "Infected")
-    infectedPlot = px.line(x=infectedPlotData["x"], y=infectedPlotData["y"], title=infectedPlotData["name"])
-
-    deadPlotData = getTrace(data, "Dead, seasonal effect = 0", "Dead")
-    deadPlot = px.line(x=deadPlotData["x"], y=deadPlotData["y"], title=deadPlotData["name"])
-
-    recoveredPlotData = getTrace(data, "Recovered Total, seasonal effect = 0", "RecoveredTotal")
-    recoveredPlot = px.line(x=recoveredPlotData["x"], y=recoveredPlotData["y"], title=recoveredPlotData["name"])
-
     if(args.plot):
+        infectedPlotData = getTrace(data, "Infected, seasonal effect = 0", "Infected")
+        infectedPlot = px.line(x=infectedPlotData["x"], y=infectedPlotData["y"], title=infectedPlotData["name"])
+
+        deadPlotData = getTrace(data, "Dead, seasonal effect = 0", "Dead")
+        deadPlot = px.line(x=deadPlotData["x"], y=deadPlotData["y"], title=deadPlotData["name"])
+
+        recoveredPlotData = getTrace(data, "Recovered Total, seasonal effect = 0", "RecoveredTotal")
+        recoveredPlot = px.line(x=recoveredPlotData["x"], y=recoveredPlotData["y"], title=recoveredPlotData["name"])
         infectedPlot.show()
         deadPlot.show()
         recoveredPlot.show()
