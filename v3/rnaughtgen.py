@@ -6,13 +6,6 @@ def main():
     run = 0
     rnaughts = [0.8, 2.2]
 
-    # Create folder to store generated text files
-    newpath = os.getcwd()
-    newpath = newpath + "\\v3\\rnaughts"
-    if not os.path.exists(newpath):
-        os.makedirs(newpath)
-    os.chdir(newpath)
-
     # Generate R0 text files where social isolation is practiced
     # for x days on, 7 days off, x days on etc. where x is equal
     # to week
