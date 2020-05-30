@@ -375,7 +375,7 @@ def main():
     #write to csv instead
     
  
-    with open('results.csv', 'w') as csvfile:
+    with open('results.csv', 'a+') as csvfile:
         fieldnames = ['Time', 'R0', 'HospitalLag', 'Dead', 'Susceptible', 'Hospital', 'RecoveredMild', 'RecoveredSevere', 'RecoveredTotal','Infected', 'Exposed', 'Sum', 'Run']
         run = defaultValues['run']
         print(run)
