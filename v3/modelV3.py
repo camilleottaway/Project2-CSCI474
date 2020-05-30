@@ -4,6 +4,7 @@ import datetime
 import math
 import plotly.express as px
 import sys
+import csv
 from functools import reduce
 #RT is the same as R0 (R naught)
 #RT is the rate of transmission
@@ -113,6 +114,7 @@ def BetterCommandLineArgReader():
                         help="Indicate path to .txt file containing age groups and R0 values")
     parser.add_argument("-dinf", action="store", help="Number of days infectious", type=float)
     parser.add_argument("-plot", action="store", help="True if you wish to show infected, dead, and recovered plots", type=bool)
+    parser.add_argument("-run", action="store", help="Keeps track of current run from scripts", type=int)
     return parser.parse_args()
 
 def UpdateDefaultValues(defaultValues, arguments):
@@ -350,7 +352,8 @@ def main():
         "HOSPITALLAG": 8,
         "UseDecayingR0": False,
         "R0FilePath": None,
-        "dinf": 10
+        "dinf": 10,
+        "run": 0
     }
     args = BetterCommandLineArgReader()
     UpdateDefaultValues(defaultValues, args)
@@ -361,12 +364,31 @@ def main():
         defaultValues["R0FilePath"] = args.decay
 
 
-    res = open("results.txt","a+")
-    res.write(str(defaultValues))
-    data = f(defaultValues)
-    res.write(str(data))
-    res.write("\n")
-    res.close()
+    # res = open("results.txt","a+")
+    # res.write(str(defaultValues))
+    # data = f(defaultValues)
+    # res.write(str(data))
+    # res.write("\n")
+    # res.close()
+
+
+    #write to csv instead
+    
+ 
+    with open('results.csv', 'w') as csvfile:
+        fieldnames = ['Time', 'R0', 'HospitalLag', 'Dead', 'Susceptible', 'Hospital', 'RecoveredMild', 'RecoveredSevere', 'RecoveredTotal','Infected', 'Exposed', 'Sum', 'Run']
+        run = defaultValues['run']
+        print(run)
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+
+        data = f(defaultValues)
+
+        for row in data:
+            row['Run'] = run
+            writer.writerow(row)
+            
+    print("Writing complete")
     
     if(args.plot):
         infectedPlotData = getTrace(data, "Infected, seasonal effect = 0", "Infected")
