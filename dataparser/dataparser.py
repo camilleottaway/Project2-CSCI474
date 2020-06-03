@@ -1,51 +1,30 @@
 import csv
+import datetime
 import re
-import pandas
+import pandas as pd
+import numpy as np
+import matplotlib
+import matplotlib.pyplot as plt
 
-fields = ('R0', 'HospitalLag', 'profileName', 'Dead', 'Susceptible', 'Hospital', 'RecoveredMild', 'RecoveredSevere', 'RecoveredTotal', 'Infected', 'Exposed', 'Sum')
-modelfields = ('Time', 'R0', 'HospitalLag', 'Dead', 'Susceptible', 'Hospital', 'RecoveredMild', 'RecoveredSevere', 'RecoveredTotal','Infected', 'Exposed', 'Sum')
 
-with open("resultsmini.txt", "r") as myfile, open("parsedresults",'w', newline='') as fw:
-    writer = csv.DictWriter(fw, fields, delimiter='|')
+model_df = pd.read_csv("results.csv")
+params_df= pd.read_csv("parametersR0.csv")
+infection_df = model_df[['Infected','Run']]
+infection_df = infection_df.apply(pd.to_numeric, errors='coerce')
+max_infected_perRun = infection_df.groupby('Run')['Infected'].max()
 
-    record = {}
+#infection_df.groupby('Run')['Infected'].max().plot.box()
+#infection_df.groupby('Run')['Infected'].max().plot.hist(bins=30)
+#infection_df.groupby('Run')['Infected'].max().plot.hist(bins=30)
 
-    for line in myfile:
-        
-        #writer.writerow(params)
-        #params = {}
-        #continue
+#time_series_df = model_df[['Infected','Run','Time']]
+#first_chunk = time_series_df.iloc[:600]
+#first_chunk['Time'] = pd.to_datetime(first_chunk['Time'])
+first_chunk = pd.DataFrame(first_chunk['Infected'],columns=first_chunk['Run'])
+#first_chunk.plot()
+#time_series_df.plot()
 
-        record=line.split('}', 1)
-        params = record[0]+'}'
-        print(params)
-        runs = record[1]
-        runs = runs.split('}')
-        print(runs[1])
 
-        rundf = pandas.DataFrame(columns=('Time', 'R0', 'HospitalLag', 'Dead', 'Susceptible', 'Hospital', 'RecoveredMild', 'RecoveredSevere', 'RecoveredTotal','Infected', 'Exposed', 'Sum'))
-
-        for run in runs:
-            fields = run.split(':')
-            print (fields)
-            # for field in fields:
-            #     modelfield = field.split(': ', 1)
-            #     print(field)
-            #     field = modelfield[0]
-            #     #field = modelfield[1]
-            # rundf[modelfield.partition('/')[-1].strip()] = value.stripS()
-        
-
-        
-
-        
-        #print(runs)
-
-        #print(line)
-        #field, value = line.split(': ', 1)
-        #runsdf[field.partition('/')[-1].strip()] = value.stripS()
-        #print(params)
-
-    #if record:
-        # handle last record
-        #writer.writerow(record)
+infection_df.groupby('Run')['Infected'].max().plot.box()
+#print(infection_df.groupby('Run')['Infected'].max())
+plt.show()
