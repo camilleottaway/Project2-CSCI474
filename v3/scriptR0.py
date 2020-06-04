@@ -34,11 +34,13 @@ def main():
         for cfr in np.round(np.arange(0.05, 0.55, .1), 2): #step size 0.05
             for dinf in np.arange(8, 13, 1): #step size 1
                 for psev in np.round(np.arange(0.1, 0.81, 0.1), 2): #step size .1
-                    modelargs = ["python3", "modelV3.py", "-decay", f"R{rnaught}.txt", "-CFR", str(cfr), "-dinf", str(dinf), "-PSEVERE", str(psev), "-N",  "278000", "-run", str(run)]
+                    modelargs = ["python3", "modelV3.py", "-decay", f"{rnaught}", "-CFR", str(cfr), "-dinf", str(dinf), "-PSEVERE", str(psev), "-N",  "278000", "-run", str(run)]
+                    #modelargs = ["python3", "modelV3.py", "-decay", f"R{rnaught}.txt", "-N",  "278000", "-run", str(run)]
                     subprocess.run(modelargs)
                     with open('parametersR0.csv', 'a+') as csvfile:
                         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                         params = {'R0': f"R{rnaught}.txt", 'CFR': cfr, 'dinf': dinf, 'PSEVERE': psev, 'N':  278000, 'run': run}
+                        #params = {'R0': f"R{rnaught}.txt",'N':  278000, 'run': run}
                         writer.writerow(params)
                     run+=1
 
