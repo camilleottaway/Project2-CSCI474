@@ -39,7 +39,7 @@ def main():
                     subprocess.run(modelargs)
                     with open('parametersR0.csv', 'a+') as csvfile:
                         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-                        params = {'R0': f"R{rnaught}.txt", 'CFR': cfr, 'dinf': dinf, 'PSEVERE': psev, 'N':  278000, 'run': run}
+                        params = {'R0': f"R{rnaught}.txt", 'CFR': cfr, 'dinf': dinf, 'PSEVERE': psev, 'N':  278000, 'Run': run}
                         #params = {'R0': f"R{rnaught}.txt",'N':  278000, 'run': run}
                         writer.writerow(params)
                     run+=1
