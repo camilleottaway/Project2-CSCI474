@@ -30,6 +30,11 @@ modelR0Only_df = pd.read_csv("resultsR0Only.csv")
 paramsR0Only_df= pd.read_csv("parametersR0Only.csv")
 infectionR0Only_df = modelR0Only_df[['Infected','Time','Run']]
 
+# runs_df = pd.read_csv("Rn.csv")
+# runs_pivoted = runs_df.pivot_table(index='run',columns='day',values='R0')
+# print(runs_pivoted)
+
+
 #convert time to date
 infectionR0Only_df['Time'] = infectionR0Only_df['Time'].apply(lambda x: str(x).split(' ')[0])
 pd.to_datetime(infectionR0Only_df['Time'], format ='%Y-%m-%d')
@@ -76,4 +81,18 @@ second_half_current_df= pivoted_df2.iloc[200:,:]
 second_half_current_df.plot()
 plt.show()
 
+
+#Just 4 R0 Files
+
+#read in data and crate dataframes
+model4R0sOnly_df = pd.read_csv("results4R0sOnly.csv")
+#paramsR0Only_df= pd.read_csv("parametersR0Only.csv")
+infection4R0sOnly_df = model4R0sOnly_df[['Infected','Time','Run']]
+
+infection4R0sOnly_df['Time'] = infection4R0sOnly_df['Time'].apply(lambda x: str(x).split(' ')[0])
+pd.to_datetime(infection4R0sOnly_df['Time'], format ='%Y-%m-%d')
+pivoted_df3= infection4R0sOnly_df.pivot_table(index='Time',columns='Run',values='Infected')
+last_df= pivoted_df3.iloc[200:,:]
+last_df.plot()
+plt.show()
 
