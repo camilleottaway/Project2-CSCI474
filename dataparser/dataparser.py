@@ -53,3 +53,27 @@ infectionR0Only_df.pivot_table(index='Time',columns='Run',values='Infected').plo
 #infectionR0Only_df.plot()
 plt.show()
 
+#Show second half of runs
+last_third_df = infectionR0Only_df.iloc[10000:,:]
+last_third_df.pivot_table(index='Time',columns='Run',values='Infected').plot()
+plt.show()
+
+
+#Show current time onwards only
+outlierGone_df = infectionR0Only_df.iloc[962:, :] #remove first  runs run becuase outlier
+
+#first half of currently relevant runs
+first_half= outlierGone_df.iloc[1:8000,:]
+pivoted_df1 = first_half.pivot_table(index='Time',columns='Run',values='Infected')
+first_current_df= pivoted_df1.iloc[200:,:]
+first_current_df.plot()
+plt.show()
+
+#second half of currently relevant runs
+second_half= outlierGone_df.iloc[8000:,:]
+pivoted_df2 = second_half.pivot_table(index='Time',columns='Run',values='Infected')
+second_half_current_df= pivoted_df2.iloc[200:,:]
+second_half_current_df.plot()
+plt.show()
+
+
